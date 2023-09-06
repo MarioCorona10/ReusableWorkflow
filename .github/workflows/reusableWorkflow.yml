@@ -25,7 +25,7 @@ jobs:
     uses: MarioCorona10/DockerPush/.github/workflows/buildPush.yml@main
     with:
       image_name: gitcalculator
-      tag: $GITHUB_RUN_NUMBER
+      tag: latest
     secrets:
       registry_username: ${{secrets.DOCKER_USERNAME}}
       registry_password: ${{secrets.DOCKER_PASSWORD}}
