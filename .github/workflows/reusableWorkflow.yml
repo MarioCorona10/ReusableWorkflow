@@ -1,1 +1,33 @@
+name: Use of reusable Workflow
 
+on:
+  workflow_dispatch
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+     - name: Checkout
+       uses: actions/checkout@v2
+
+     - name: Set up .NET Core
+       uses: actions/setup-dotnet@v1
+       with:
+         dotnet-version: '6.0.x'
+         include-prerelease: true
+
+     - name: Build with dotnet
+       run: dotnet build --configuration Release
+       working-directory: src 
+
+  docker:
+    uses: MarioCorona10/DockerPush/.github/workflows/buildPush.yml@main
+    with:
+      image_name: gitcalculator
+      tag: $GITHUB_RUN_NUMBER
+    secrets:
+      registry_username: ${{secrets.DOCKER_USERNAME}}
+      registry_password: ${{secrets.DOCKER_PASSWORD}}
+      
+    
